@@ -1,27 +1,10 @@
 <script setup>
+import AboutView from './AboutView.vue';
+import Live_preview_status from './Live_preview_status.vue';
 </script>
 
 <template>
   <div class="w-full min-h-screen">
-    <header class="flex justify-between items-center py-6 px-10 border-b border-dark-border backdrop-blur-sm fixed w-full top-0 z-50">
-      <div class="text-3xl font-extrabold tracking-wider">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">ECO</span>PULSE
-      </div>
-      
-      <nav class="hidden md:flex gap-8 text-sm font-medium">
-        <a href="#" class="hover:text-neon-cyan transition-colors duration-300">About</a>
-        <a href="#" class="hover:text-neon-cyan transition-colors duration-300">Features</a>
-        <a href="#" class="hover:text-neon-cyan transition-colors duration-300">AQI Map</a>
-        <a href="#" class="hover:text-neon-cyan transition-colors duration-300">Community</a>
-        <a href="#" class="hover:text-neon-cyan transition-colors duration-300">Blog</a>
-      </nav>
-
-      <div class="flex gap-6 items-center">
-        <button class="text-sm font-bold hover:text-neon-cyan transition-colors duration-300">LOGIN</button>
-        <button class="px-7 py-2 text-sm bg-gradient-to-r from-neon-cyan to-neon-purple rounded-full font-bold text-dark-purple hover:scale-105 transition-transform duration-300">REGISTER</button>
-      </div>
-    </header>
-
     <main class="pt-32 px-10 container mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-12 min-h-screen">
       <div class="w-full lg:w-1/2 flex flex-col gap-8 z-10">
         <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
@@ -53,5 +36,12 @@
         <div class="absolute z-20 w-20 h-20 bg-gradient-to-r from-neon-magenta to-neon-purple rounded-2xl blur-md -top-10 right-10 opacity-60 rotate-12"></div>
       </div>
     </main>
+
+    <!-- for about content -->
+    <AboutView/>
+
+    <!-- for priview content -->
+    <Live_preview_status/>
+
   </div>
 </template>
