@@ -55,7 +55,7 @@ import { RouterLink } from 'vue-router'
 
       <div class="mt-8 text-center text-sm text-gray-400">
         Belum punya akun? 
-        <a href="#" class="text-neon-magenta hover:underline font-semibold ml-1">Daftar Sekarang</a>
+        <a href="/register" class="text-neon-magenta hover:underline font-semibold ml-1">Daftar Sekarang</a>
       </div>
 
     </div>
