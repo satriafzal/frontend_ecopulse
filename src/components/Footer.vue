@@ -1,14 +1,13 @@
 <script setup>
+    import { RouterLink } from 'vue-router';
 </script>
 
 <template>
     <footer class="bg-[#03000d] border-t border-dark-border pt-16 pb-8 px-10 relative z-10">
         <div class="container mx-auto">
 
-            <!-- Grid Kolom Utama -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
 
-                <!-- Kolom 1 & 2: Brand & Deskripsi -->
                 <div class="md:col-span-2 flex flex-col gap-4">
                     <div class="text-3xl font-extrabold tracking-wider">
                         <span
@@ -19,7 +18,6 @@
                         sehat, aman, dan berkelanjutan.
                     </p>
 
-                    <!-- Ikon Sosial Media pake PrimeIcons -->
                     <div class="flex gap-4 mt-2">
                         <a href="#"
                             class="w-10 h-10 rounded-full bg-[#0a012a] border border-dark-border flex items-center justify-center text-gray-400 hover:text-neon-cyan hover:border-neon-cyan hover:-translate-y-1 transition-all duration-300">
@@ -36,7 +34,6 @@
                     </div>
                 </div>
 
-                <!-- Kolom 3: Navigasi Cepat (Quick Links) -->
                 <div class="flex flex-col gap-4">
                     <h4 class="text-white font-bold mb-2">Eksplorasi</h4>
                     <a href="#about" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors">Tentang
@@ -49,10 +46,9 @@
                         Terbaru</a>
                 </div>
 
-                <!-- Kolom 4: Legal & Support -->
                 <div class="flex flex-col gap-4">
                     <h4 class="text-white font-bold mb-2">Bantuan & Legal</h4>
-                    <a href="#" class="text-sm text-gray-400 hover:text-neon-purple transition-colors">Pusat Bantuan</a>
+                    <RouterLink to="/pusat-bantuan" class="text-sm text-gray-400 hover:text-neon-purple transition-colors">Pusat Bantuan</RouterLink>
                     <a href="#" class="text-sm text-gray-400 hover:text-neon-purple transition-colors">Kebijakan
                         Privasi</a>
                     <a href="#" class="text-sm text-gray-400 hover:text-neon-purple transition-colors">Syarat
@@ -62,7 +58,6 @@
 
             </div>
 
-            <!-- Garis Pemisah & Copyright Bar -->
             <div class="pt-8 border-t border-dark-border flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-xs text-gray-500">
                     &copy; 2026 EcoPulse Smart City. All rights reserved.
