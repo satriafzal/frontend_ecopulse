@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <div class="min-h-screen bg-dark-purple flex items-center justify-center relative overflow-hidden px-4 pt-28">
+  <div class="min-h-screen bg-dark-purple flex items-center justify-center relative overflow-hidden px-4 pt-28" data-aos="fade-up">
     <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-neon-purple rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-pulse"></div>
     <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-neon-cyan rounded-full mix-blend-screen filter blur-[120px] opacity-30"></div>
 
