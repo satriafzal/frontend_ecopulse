@@ -40,5 +40,5 @@
       window.scrollTo({ top: 0, behavior: 'smooth'});
     }
 
-    const hideMenu = computed(() => ['/login', '/register', '/pusat-bantuan'].includes(route.path));
+    const hideMenu = computed(() => ['/login', '/register', '/pusat-bantuan','/privasi','/syarat_ketentuan'].includes(route.path));
 </script>
