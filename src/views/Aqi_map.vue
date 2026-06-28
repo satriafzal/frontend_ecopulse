@@ -7,12 +7,12 @@
         <div class="container mx-auto">
             <div class="text-center mb-16">
                 <span
-                    class="text-xs font-bold tracking-widest text-neon-cyan uppercase bg-neon-cyan/10 px-3 py-1 rounded-full">Interactive
+                    class="text-xs font-bold tracking-widest text-neon-cyan uppercase bg-neon-cyan/10 px-3 py-1 rounded-full" data-aos="fade-in">Interactive
                     Mapping</span>
-                <h2 class="text-3xl md:text-5xl font-extrabold mt-4">Peta Geo-Spasial <span
+                <h2 class="text-3xl md:text-5xl font-extrabold mt-4" data-aos="fade-right">Peta Geo-Spasial <span
                         class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-blue-500">Kualitas
                         Udara</span></h2>
-                <p class="text-gray-400 max-w-2xl mx-auto mt-4 text-sm md:text-base">
+                <p class="text-gray-400 max-w-2xl mx-auto mt-4 text-sm md:text-base" data-aos="fade-up">
                     Eksplorasi kondisi udara di setiap sudut wilayah secara visual. Zona warna mempermudah Anda
                     mengidentifikasi tingkat polusi udara saat ini.
                 </p>
@@ -21,7 +21,7 @@
             <div class="flex flex-col lg:flex-row gap-8 items-stretch">
 
                 <div class="w-full lg:w-1/3 flex flex-col gap-6">
-                    <div class="p-6 rounded-3xl bg-dark-purple border border-dark-border backdrop-blur-md">
+                    <div class="p-6 rounded-3xl bg-dark-purple border border-dark-border backdrop-blur-md" data-aos="fade-right">
                         <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
                             <i class="pi pi-sliders-h text-neon-cyan"></i> Kontrol Visual
                         </h3>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <div class="p-6 rounded-3xl bg-dark-purple border border-dark-border backdrop-blur-md flex-grow">
+                    <div class="p-6 rounded-3xl bg-dark-purple border border-dark-border backdrop-blur-md flex-grow" data-aos="fade-right">
                         <h3 class="text-base font-bold text-white mb-4">Indikator Kualitas</h3>
                         <div class="flex flex-col gap-3 text-xs font-medium">
                             <div
@@ -67,7 +67,7 @@
                 </div>
 
                 <div
-                    class="w-full lg:w-2/3 min-h-[350px] rounded-3xl bg-[#0d0524] border border-dark-border relative overflow-hidden flex items-center justify-center group shadow-2xl shadow-neon-cyan/5">
+                    class="w-full lg:w-2/3 min-h-[350px] rounded-3xl bg-[#0d0524] border border-dark-border relative overflow-hidden flex items-center justify-center group shadow-2xl shadow-neon-cyan/5" data-aos="fade-left">
                     <div class="absolute inset-0 bg-gradient-to-tr from-neon-cyan/5 via-transparent to-neon-purple/5">
                     </div>
 
