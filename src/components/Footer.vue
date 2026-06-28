@@ -49,11 +49,10 @@
                 <div class="flex flex-col gap-4">
                     <h4 class="text-white font-bold mb-2">Bantuan & Legal</h4>
                     <RouterLink to="/pusat-bantuan" class="text-sm text-gray-400 hover:text-neon-purple transition-colors">Pusat Bantuan</RouterLink>
-                    <a href="#" class="text-sm text-gray-400 hover:text-neon-purple transition-colors">Kebijakan
-                        Privasi</a>
-                    <a href="#" class="text-sm text-gray-400 hover:text-neon-purple transition-colors">Syarat
-                        Ketentuan</a>
-                    <a href="#" class="text-sm text-gray-400 hover:text-neon-purple transition-colors">Hubungi Kami</a>
+                    <RouterLink to="/privasi" class="text-sm text-gray-400 hover:text-neon-purple transition-colors">Kebijakan
+                        Privasi</RouterLink>
+                    <RouterLink to="/syarat_ketentuan" class="text-sm text-gray-400 hover:text-neon-purple transition-colors">Syarat
+                        Ketentuan</RouterLink>
                 </div>
 
             </div>
