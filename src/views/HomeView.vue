@@ -10,15 +10,15 @@ import Live_preview_status from './Live_preview_status.vue';
   <div class="w-full min-h-screen">
     <main class="pt-32 px-10 container mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-12 min-h-screen">
       <div class="w-full lg:w-1/2 flex flex-col gap-8 z-10">
-        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight" data-aos="fade-right">
           Nafas Segar, <br />
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">Kota Pintar</span>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple" data-aos="fade-right">Kota Pintar</span>
         </h1>
-        <p class="text-gray-300 text-lg max-w-lg leading-relaxed">
+        <p class="text-gray-300 text-lg max-w-lg leading-relaxed" data-aos="fade-right">
           Sistem pemantauan kualitas udara (AQI) dan cuaca real-time terintegrasi. Pantau lingkunganmu untuk hidup yang lebih sehat.
         </p>
         
-        <div class="flex flex-wrap gap-5 mt-2">
+        <div class="flex flex-wrap gap-5 mt-2" data-aos="fade-up">
           <button class="px-8 py-3 rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple text-dark-purple font-bold hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,255,255,0.4)]">
             Jelajahi Lebih Lanjut
           </button>

@@ -4,8 +4,8 @@
         
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
           <div>
-            <span class="text-xs font-bold tracking-widest text-neon-cyan uppercase bg-neon-cyan/10 px-3 py-1 rounded-full">Live Preview</span>
-            <h2 class="text-3xl md:text-4xl font-extrabold mt-3">Pantauan Udara Terkini</h2>
+            <span class="text-xs font-bold tracking-widest text-neon-cyan uppercase bg-neon-cyan/10 px-3 py-1 rounded-full" data-aos="fade-in">Live Preview</span>
+            <h2 class="text-3xl md:text-4xl font-extrabold mt-3" data-aos="fade-right">Pantauan Udara Terkini</h2>
           </div>
           <div class="flex items-center gap-2 bg-dark-purple border border-dark-border px-4 py-2 rounded-full text-sm text-gray-400">
             <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
@@ -15,7 +15,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           
-          <div class="p-6 rounded-3xl bg-dark-purple/60 border border-dark-border backdrop-blur-md flex flex-col justify-between">
+          <div class="p-6 rounded-3xl bg-dark-purple/60 border border-dark-border backdrop-blur-md flex flex-col justify-between" data-aos="flip-right">
             <div>
               <p class="text-gray-400 text-sm font-medium">Indeks Kualitas Udara (AQI)</p>
               <div class="flex items-baseline gap-4 mt-4">
@@ -28,7 +28,7 @@
             </p>
           </div>
 
-          <div class="p-6 rounded-3xl bg-dark-purple/60 border border-dark-border backdrop-blur-md flex flex-col gap-4">
+          <div class="p-6 rounded-3xl bg-dark-purple/60 border border-dark-border backdrop-blur-md flex flex-col gap-4" data-aos="flip-right">
             <p class="text-gray-400 text-sm font-medium">Polutan Utama</p>
             
             <div class="flex flex-col gap-1">
@@ -62,7 +62,7 @@
             </div>
           </div>
 
-          <div class="p-6 rounded-3xl bg-gradient-to-br from-[#1b0847] to-dark-purple border border-neon-purple/30 shadow-[inset_0_0_20px_rgba(191,0,255,0.15)] flex flex-col justify-between">
+          <div class="p-6 rounded-3xl bg-gradient-to-br from-[#1b0847] to-dark-purple border border-neon-purple/30 shadow-[inset_0_0_20px_rgba(191,0,255,0.15)] flex flex-col justify-between" data-aos="flip-right">
             <div>
               <p class="text-neon-magenta text-xs font-bold tracking-wider uppercase">Smart Advisory</p>
               <h4 class="text-xl font-bold mt-2 mb-3">Tindakan Proteksi</h4>
@@ -78,7 +78,7 @@
 
         </div>
 
-        <div class="mt-10 text-center">
+        <div class="mt-10 text-center" data-aos="fade-in">
           <p class="text-sm text-gray-400">
             Ingin memantau kota lain atau melihat grafik historis lengkap? 
             <a href="#" class="text-neon-cyan hover:underline ml-1 font-semibold">Buka Dashboard Utama →</a>
