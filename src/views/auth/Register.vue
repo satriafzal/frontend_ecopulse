@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <div class="min-h-screen bg-dark-purple flex items-center justify-center relative overflow-hidden px-4 py-12 pt-28">
+  <div class="min-h-screen bg-dark-purple flex items-center justify-center relative overflow-hidden px-4 py-12 pt-28" data-aos="fade-up">
     <!-- Ornamen Background (Neon Orbs) -->
     <div class="absolute top-[10%] right-[-5%] w-96 h-96 bg-neon-cyan rounded-full mix-blend-screen filter blur-[120px] opacity-20 animate-pulse"></div>
     <div class="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-neon-purple rounded-full mix-blend-screen filter blur-[120px] opacity-30"></div>
@@ -64,7 +64,7 @@ import { RouterLink } from 'vue-router'
         <div class="flex items-start gap-2 text-xs text-gray-400 mt-2">
           <input type="checkbox" class="accent-neon-cyan w-4 h-4 rounded border-gray-600 bg-dark-purple mt-0.5 cursor-pointer">
           <label>
-            Saya setuju dengan <a href="#" class="text-neon-cyan hover:underline">Syarat & Ketentuan</a> serta <a href="#" class="text-neon-cyan hover:underline">Kebijakan Privasi</a> yang berlaku.
+            Saya setuju dengan <RouterLink to="/syarat_ketentuan" class="text-neon-cyan hover:underline">Syarat & Ketentuan</RouterLink> serta <RouterLink to="/privasi" class="text-neon-cyan hover:underline">Kebijakan Privasi</RouterLink> yang berlaku.
           </label>
         </div>
 
