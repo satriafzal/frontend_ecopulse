@@ -3,19 +3,19 @@
         <div class="container mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                 <div class="max-w-xl">
-                    <span class="text-xs font-bold tracking-widest text-neon-cyan uppercase mb-3">Eco Insight</span>
-                    <h2 class="text-4xl font-extrabold">Kabar <span
+                    <span class="text-xs font-bold tracking-widest text-neon-cyan uppercase mb-3" data-aos="fade-in">Eco Insight</span>
+                    <h2 class="text-4xl font-extrabold" data-aos="fade-right">Kabar <span
                             class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-blue-500">Lingkungan</span>
                         Terbaru</h2>
                 </div>
                 <button
                     class="text-sm font-bold text-neon-cyan flex items-center gap-2 hover:translate-x-2 transition-transform duration-300">
-                    Lihat Semua Artikel <i class="pi pi-arrow-right"></i>
+                    Lihat Semua Artikel <i class="pi pi-arrow-right" data-aos="fade-in"></i>
                 </button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="group cursor-pointer">
+                <div class="group cursor-pointer" data-aos="flip-right">
                     <div class="relative w-full h-56 rounded-3xl overflow-hidden border border-dark-border mb-6">
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-purple to-transparent z-10"></div>
                             <img 
@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                <div class="group cursor-pointer">
+                <div class="group cursor-pointer" data-aos="flip-right">
                     <div class="relative w-full h-56 rounded-3xl overflow-hidden border border-dark-border mb-6">
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-purple to-transparent z-10"></div>
                             <img 
@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="group cursor-pointer">
+                <div class="group cursor-pointer" data-aos="flip-right">
                     <div class="relative w-full h-56 rounded-3xl overflow-hidden border border-dark-border mb-6">
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-purple to-transparent z-10"></div>
                             <img 
