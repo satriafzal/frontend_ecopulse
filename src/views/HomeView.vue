@@ -18,7 +18,7 @@ import Live_preview_status from './Live_preview_status.vue';
           Sistem pemantauan kualitas udara (AQI) dan cuaca real-time terintegrasi. Pantau lingkunganmu untuk hidup yang lebih sehat.
         </p>
         
-        <div class="flex flex-wrap gap-5 mt-2" data-aos="fade-up">
+        <div class="flex flex-wrap gap-5 mt-2 pb-8" data-aos="fade-up">
           <button class="px-8 py-3 rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple text-dark-purple font-bold hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,255,255,0.4)]">
             Jelajahi Lebih Lanjut
           </button>
