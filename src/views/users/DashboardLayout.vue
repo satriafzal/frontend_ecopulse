@@ -14,7 +14,7 @@ const toggleSidebar = () => { isExpanded.value = !isExpanded.value }
 
             <div>
                 <div class="flex items-center mb-10" :class="isExpanded ? 'px-8' : 'justify-center'">
-                    <span class="text-xl font-bold" v-if="isExpanded">Vision</span>
+                    <span class="text-xl font-bold" v-if="isExpanded">Eco Pulse</span>
                 </div>
 
                 <div class="px-4">
@@ -31,10 +31,30 @@ const toggleSidebar = () => { isExpanded.value = !isExpanded.value }
                         <i class="pi pi-th-large"></i>
                         <span v-if="isExpanded">Dashboard</span>
                     </RouterLink>
+                    <RouterLink to="/user/aqimap_users"
+                        class="flex items-center gap-4 px-4 py-3.5 rounded-full hover:bg-[#120b33]">
+                        <i class="pi pi-map"></i>
+                        <span v-if="isExpanded">Aqi Map</span>
+                    </RouterLink>
+                    <RouterLink to="/user/history_data"
+                        class="flex items-center gap-4 px-4 py-3.5 rounded-full hover:bg-[#120b33]">
+                        <i class="pi pi-history"></i>
+                        <span v-if="isExpanded">History Data</span>
+                    </RouterLink>
+                    <RouterLink to="/user/saved"
+                        class="flex items-center gap-4 px-4 py-3.5 rounded-full hover:bg-[#120b33]">
+                        <i class="pi pi-bookmark"></i>
+                        <span v-if="isExpanded">Save Location</span>
+                    </RouterLink>
                     <RouterLink to="/user/pf_user"
                         class="flex items-center gap-4 px-4 py-3.5 rounded-full hover:bg-[#120b33]">
                         <i class="pi pi-user"></i>
                         <span v-if="isExpanded">Profil</span>
+                    </RouterLink>
+                    <RouterLink to="/"
+                        class="flex items-center gap-4 px-4 py-3.5 rounded-full hover:bg-[#120b33]">
+                        <i class="pi pi-sign-out"></i>
+                        <span v-if="isExpanded">Log Out</span>
                     </RouterLink>
                 </nav>
             </div>
