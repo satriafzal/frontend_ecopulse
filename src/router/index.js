@@ -7,6 +7,9 @@ import Privacy from '@/views/Privacy.vue'
 import Syarat_ketentuan from '@/views/Syarat_ketentuan.vue'
 import Dashboarduser from '@/views/users/Dashboarduser.vue'
 import Profileuser from '@/views/users/Profileuser.vue'
+import Aqi_mapusers from '@/views/users/Aqi_mapusers.vue'
+import History_data from '@/views/users/History_data.vue'
+import SavedLocations from '@/views/users/SavedLocations.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,6 +57,21 @@ const router = createRouter({
           path: 'pf_user',
           name: 'profile-user',
           component: Profileuser
+        },
+        {
+          path: 'aqimap_users',
+          name: 'aqi_map_users',
+          component: Aqi_mapusers
+        },
+        {
+          path: 'history_data',
+          name: 'history_data_users',
+          component: History_data
+        },
+        {
+          path: 'saved',
+          name: 'saved_location',
+          component: SavedLocations
         }
       ]
     },
