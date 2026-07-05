@@ -1,5 +1,5 @@
 <template>
-    <header class="flex justify-between items-center py-6 px-6 md:px-10 border-b border-dark-border backdrop-blur-md bg-[#06011a]/90 fixed w-full top-0 z-50">
+    <header v-if="!hideEntireNavbar" class="flex justify-between items-center py-6 px-6 md:px-10 border-b border-dark-border backdrop-blur-md bg-[#06011a]/90 fixed w-full top-0 z-50">
       
       <!-- LOGO -->
       <router-link to="/" @click="scrolltop()" class="text-2xl md:text-3xl font-extrabold tracking-wider z-50">
@@ -7,7 +7,7 @@
       </router-link>
       
       <!-- DESKTOP NAV (Sembunyi di HP: hidden md:flex) -->
-      <nav v-if="!hideMenu" class="hidden md:flex gap-8 text-sm font-medium">
+      <nav class="hidden md:flex gap-8 text-sm font-medium">
         <a href="#about" class="hover:text-neon-cyan transition-colors duration-300">About</a>
         <a href="#live-data" class="hover:text-neon-cyan transition-colors duration-300">Live Data</a>
         <a href="#aqi-map" class="hover:text-neon-cyan transition-colors duration-300">AQI Map</a>
@@ -86,7 +86,15 @@
       isMobileMenuOpen.value = false;
     }
 
-    const hideMenu = computed(() => ['/login', '/register', '/pusat-bantuan','/privasi','/syarat_ketentuan'].includes(route.path));
+    // for remove navbar in page user or admin
+    const hideEntireNavbar = computed(() => {
+      return route.path.startsWith('/user') || route.path.startsWith('/admin')
+    })
+
+    const hideMenu = computed(() => {
+      const exactpath = ['/login', '/register', '/pusat-bantuan', '/privasi', '/syarat_ketentuan'];
+      return exactpath.includes(route.path);
+    } );
 </script>
 
 <style scoped>
