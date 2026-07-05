@@ -8,33 +8,37 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
 
             <!-- Widget Hero (Kiri, 2 Kolom) -->
-            <div
-                class="lg:col-span-2 bg-[#0d0524] rounded-3xl p-8 flex flex-col justify-between border border-[#1a123a] shadow-lg relative overflow-hidden">
+            <div class="lg:col-span-2 bg-[#0d0524] rounded-3xl p-6 md:p-8 flex flex-col justify-between border border-[#1a123a] shadow-lg relative overflow-hidden">
                 <!-- Ornamen abstrak -->
-                <div
-                    class="absolute -top-10 -right-10 w-64 h-64 bg-gradient-to-br from-neon-cyan/10 to-transparent rounded-full blur-2xl pointer-events-none">
-                </div>
+                <div class="absolute -top-10 -right-10 w-64 h-64 bg-gradient-to-br from-neon-cyan/10 to-transparent rounded-full blur-2xl pointer-events-none"></div>
 
                 <div>
-                    <p class="text-gray-400 text-sm font-medium mb-1">Dashboard Overview</p>
-                    <h1 class="text-4xl font-bold text-white flex items-center gap-3">
-                        Hello Satria <span class="text-3xl">👋</span>
+                    <p class="text-gray-400 text-xs md:text-sm font-medium mb-1">Dashboard Overview</p>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white flex items-center gap-2 md:gap-3">
+                        Hello Satria <span class="text-2xl md:text-3xl">👋</span>
                     </h1>
                 </div>
+                
+                <!-- BAGIAN INI YANG DIBENERIN BIAR RESPONSIVE -->
+                <div class="flex flex-row gap-3 md:gap-6 mt-8 md:mt-12 w-full">
+                
+                <!-- Kotak Status AQI -->
+                <div class="bg-[#1a103c] rounded-2xl p-4 md:p-5 w-1/2 border border-[#261a52] flex flex-col justify-center">
+                    <p class="text-gray-400 text-[10px] md:text-xs uppercase tracking-wider mb-1 line-clamp-1">Status AQI</p>
+                    <p class="text-xl md:text-2xl font-bold text-white flex flex-col md:flex-row md:items-baseline gap-1 md:gap-2">
+                    45 <span class="text-xs md:text-sm font-normal text-green-400">Baik</span>
+                    </p>
+                </div>
+                
+                <!-- Kotak Suhu Cuaca -->
+                <div class="bg-[#1a103c] rounded-2xl p-4 md:p-5 w-1/2 border border-[#261a52] flex flex-col justify-center">
+                    <div class="flex justify-between items-start mb-1">
+                        <p class="text-gray-400 text-[10px] md:text-xs uppercase tracking-wider line-clamp-1">Suhu Cuaca</p>
+                        <i class="pi pi-eye text-gray-500 text-xs md:text-sm mt-0.5"></i>
+                    </div>
+                    <p class="text-xl md:text-2xl font-bold text-white">28°C</p>
+                </div>
 
-                <div class="flex items-center gap-6 mt-12">
-                    <div class="bg-[#1a103c] rounded-2xl p-5 w-48 border border-[#261a52]">
-                        <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Status AQI</p>
-                        <p class="text-2xl font-bold text-white">45 <span
-                                class="text-sm font-normal text-green-400">Baik</span></p>
-                    </div>
-                    <div class="bg-[#1a103c] rounded-2xl p-5 w-48 border border-[#261a52]">
-                        <div class="flex justify-between items-start mb-1">
-                            <p class="text-gray-400 text-xs uppercase tracking-wider">Suhu Cuaca</p>
-                            <i class="pi pi-eye text-gray-500"></i>
-                        </div>
-                        <p class="text-2xl font-bold text-white">28°C</p>
-                    </div>
                 </div>
             </div>
 
