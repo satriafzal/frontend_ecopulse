@@ -10,6 +10,9 @@ import Profileuser from '@/views/users/Profileuser.vue'
 import Aqi_mapusers from '@/views/users/Aqi_mapusers.vue'
 import History_data from '@/views/users/History_data.vue'
 import SavedLocations from '@/views/users/SavedLocations.vue'
+import AdminOverview from '@/views/admin/AdminOverview.vue'
+import UserManagement from '@/views/admin/UserManagement.vue'
+import ApiMonitoring from '@/views/admin/ApiMonitoring.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +47,8 @@ const router = createRouter({
       name: 'syarat-dan-ketentuan',
       component: Syarat_ketentuan
     },
+
+    // for routes user
     {
       path: '/user',
       component: () => import('@/views/users/DashboardLayout.vue'),
@@ -75,6 +80,33 @@ const router = createRouter({
         }
       ]
     },
+
+    // for routes admin
+    {
+      path:'/admin',
+      component: () => import('@/views/admin/AdminLayout.vue'),
+      children: [
+        {
+          path :'',
+          redirect: '/admin/dashboard'
+        },
+        {
+          path: 'adm-dashboard',
+          name: 'admin-db',
+          component: AdminOverview
+        },
+        {
+          path: 'adm-user',
+          name: 'management-user',
+          component: UserManagement
+        },
+        {
+          path: 'adm-api',
+          name: 'adm-api-monitoring',
+          component: ApiMonitoring
+        }
+      ]
+    }
   ],
   scrollBehavior(to, from, savedPosition) {
     // Selalu paksa scroll ke paling atas tiap ganti halaman
