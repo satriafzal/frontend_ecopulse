@@ -1,9 +1,5 @@
-<script setup>
-    import { RouterLink } from 'vue-router';
-</script>
-
 <template>
-    <footer class="bg-[#03000d] border-t border-dark-border pt-16 pb-8 px-10 relative z-10">
+    <footer v-if="!hidefooter" class="bg-[#03000d] border-t border-dark-border pt-16 pb-8 px-10 relative z-10">
         <div class="container mx-auto">
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
@@ -70,3 +66,15 @@
         </div>
     </footer>
 </template>
+
+<script setup>
+    import { RouterLink } from 'vue-router';
+    import { useRoute } from 'vue-router';
+    import { computed } from 'vue';
+
+    const route = useRoute();
+
+    const hidefooter = computed(() => {
+        return route.path.startsWith('/admin') || route.path.startsWith('/user');
+    })
+</script>
