@@ -9,7 +9,7 @@ const ranges = ['Hari Ini', '7 Hari', '30 Hari', 'Tahun Ini']
     <div class="w-full max-w-7xl mx-auto">
 
         <!-- Header Page -->
-        <div class="flex justify-between items-end mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-5 mb-8">
             <div>
                 <h1 class="text-3xl font-bold text-white mb-2">Riwayat & Analitik</h1>
                 <p class="text-gray-400 text-sm">Pantau tren kualitas udara dan paparan polutan Anda dari waktu ke
@@ -17,7 +17,7 @@ const ranges = ['Hari Ini', '7 Hari', '30 Hari', 'Tahun Ini']
             </div>
 
             <!-- Filter Rentang Waktu -->
-            <div class="bg-[#0d0524] p-1 rounded-xl border border-[#1a123a] hidden md:flex">
+            <div class="bg-[#0d0524] p-1 rounded-xl border border-[#1a123a] flex overflow-x-auto w-full md:w-auto" style="scrollbar-width: none;">
                 <button v-for="range in ranges" :key="range" @click="selectedRange = range" :class="[
                     'px-4 py-2 text-sm font-semibold rounded-lg transition-all',
                     selectedRange === range ? 'bg-[#1a103c] text-white shadow-md' : 'text-gray-500 hover:text-gray-300'
