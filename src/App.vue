@@ -7,10 +7,6 @@ import AOS from 'aos'
 
 const route = useRoute();
 
-const isUserArea = computed(() => {
-  return route.matched.some(record => record.path === '/user')
-})
-
 // inisialisasi aos
 onMounted(() => {
   AOS.init({
@@ -24,9 +20,9 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen bg-dark-purple text-white font-sans overflow-x-hidden">
-    <Navbar v-if="!isUserArea"/>
+    <Navbar/>
     <RouterView />
-    <Footer v-if="!isUserArea"/>
+    <Footer/>
   </div>
 </template>
 
