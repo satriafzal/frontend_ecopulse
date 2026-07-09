@@ -5,13 +5,13 @@
 <template>
     <div class="w-full max-w-6xl mx-auto">
 
-        <div class="mb-8">
+        <div class="mb-8" data-aos="fade-right">
             <h1 class="text-3xl font-bold text-white mb-2">Pengaturan Profil</h1>
             <p class="text-gray-400 text-sm">Kelola data pribadi, foto profil, dan keamanan akun Anda.</p>
         </div>
 
         <!-- Grid Layout: Kiri (Foto & Password), Kanan (Data Pribadi) -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" data-aos="fade-up">
 
             <!-- KOLOM KIRI (FOTO PROFIL) -->
             <div class="lg:col-span-1 flex flex-col gap-8">
