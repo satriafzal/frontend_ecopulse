@@ -37,7 +37,7 @@ const savedLocations = ref([
     <div class="w-full max-w-7xl mx-auto">
 
         <!-- Header Page -->
-        <div class="flex justify-between items-end mb-8">
+        <div class="flex justify-between items-end mb-8" data-aos="fade-right">
             <div>
                 <h1 class="text-3xl font-bold text-white mb-2">Lokasi Favorit</h1>
                 <p class="text-gray-400 text-sm">Kelola daftar lokasi yang paling sering Anda pantau.</p>
@@ -55,7 +55,7 @@ const savedLocations = ref([
 
             <!-- Card Lokasi di-looping pakai Vue v-for -->
             <div v-for="loc in savedLocations" :key="loc.id"
-                class="bg-[#0d0524] rounded-3xl p-6 border border-[#1a123a] shadow-lg flex flex-col relative overflow-hidden group hover:border-gray-600 transition-colors">
+                class="bg-[#0d0524] rounded-3xl p-6 border border-[#1a123a] shadow-lg flex flex-col relative overflow-hidden group hover:border-gray-600 transition-colors" data-aos="flip-left">
                 <!-- Aksen warna di sisi kiri card -->
                 <div class="absolute left-0 top-0 bottom-0 w-1.5" :class="{
                     'bg-green-400': loc.color === 'green',
