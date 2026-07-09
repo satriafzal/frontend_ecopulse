@@ -9,7 +9,7 @@ const ranges = ['Hari Ini', '7 Hari', '30 Hari', 'Tahun Ini']
     <div class="w-full max-w-7xl mx-auto">
 
         <!-- Header Page -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-5 mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-5 mb-8" data-aos="fade-right">
             <div>
                 <h1 class="text-3xl font-bold text-white mb-2">Riwayat & Analitik</h1>
                 <p class="text-gray-400 text-sm">Pantau tren kualitas udara dan paparan polutan Anda dari waktu ke
@@ -28,7 +28,7 @@ const ranges = ['Hari Ini', '7 Hari', '30 Hari', 'Tahun Ini']
         </div>
 
         <!-- GRID UTAMA -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" data-aos="fade-up">
 
             <!-- 1. GRAFIK TREN UTAMA (2 Kolom) -->
             <div class="lg:col-span-2 bg-[#0d0524] rounded-3xl p-8 border border-[#1a123a] shadow-lg flex flex-col">
