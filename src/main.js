@@ -10,10 +10,11 @@ import './assets/main.css'
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 import ToastService from 'primevue/toastservice'
+import ConfirmationService from 'primevue/confirmationservice'
+
 
 // for aos style
 import 'aos/dist/aos.css'
-
 
 const app = createApp(App)
 
@@ -30,6 +31,7 @@ app.use(PrimeVue, {
     }
 })
 
+app.use(ConfirmationService)
 app.use(createPinia())
 app.use(router)
 app.use(PrimeVue)
