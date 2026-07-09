@@ -16,7 +16,7 @@ const selectedLocation = ref({
 
 <template>
   <!-- GANTI KUNCI RESPONSIVE: flex-col untuk HP, lg:flex-row untuk Laptop -->
-  <div class="w-full h-[calc(100vh-6rem)] lg:h-[calc(100vh-8rem)] relative rounded-3xl overflow-hidden border border-[#1a123a] shadow-lg flex flex-col lg:flex-row">
+  <div class="w-full h-[calc(100vh-6rem)] lg:h-[calc(100vh-8rem)] relative rounded-3xl overflow-hidden border border-[#1a123a] shadow-lg flex flex-col lg:flex-row" data-aos="fade-up">
     
     <!-- 1. AREA PETA (Di HP posisinya di atas) -->
     <div class="flex-1 min-h-[250px] bg-[#0a041c] relative">
