@@ -1,13 +1,11 @@
 <template>
     <header v-if="!hideEntireNavbar" class="flex justify-between items-center py-6 px-6 md:px-10 border-b border-dark-border backdrop-blur-md bg-[#06011a]/90 fixed w-full top-0 z-50">
       
-      <!-- LOGO -->
       <router-link to="/" @click="scrolltop()" class="text-2xl md:text-3xl font-extrabold tracking-wider z-50">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">ECO</span>PULSE
       </router-link>
       
-      <!-- DESKTOP NAV (Sembunyi di HP: hidden md:flex) -->
-      <nav class="hidden md:flex gap-8 text-sm font-medium">
+      <nav v-if="!hideMenu" class="hidden md:flex gap-8 text-sm font-medium">
         <a href="#about" class="hover:text-neon-cyan transition-colors duration-300">About</a>
         <a href="#live-data" class="hover:text-neon-cyan transition-colors duration-300">Live Data</a>
         <a href="#aqi-map" class="hover:text-neon-cyan transition-colors duration-300">AQI Map</a>
@@ -15,7 +13,6 @@
         <a href="#blog" class="hover:text-neon-cyan transition-colors duration-300">Blog</a>
       </nav>
 
-      <!-- DESKTOP BUTTONS (Sembunyi di HP: hidden md:flex) -->
       <div class="hidden md:flex gap-6 items-center">
         <!-- Kalau bukan di halaman hideMenu -->
         <template v-if="!hideMenu">
