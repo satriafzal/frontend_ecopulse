@@ -14,6 +14,7 @@ import AdminOverview from '@/views/admin/AdminOverview.vue'
 import UserManagement from '@/views/admin/UserManagement.vue'
 import ApiMonitoring from '@/views/admin/ApiMonitoring.vue'
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -111,6 +112,24 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     // Selalu paksa scroll ke paling atas tiap ganti halaman
     return { top: 0, behavior: 'smooth' }
+  }
+})
+
+// for middleware and acces role permission
+router.beforeEach((to, from, next) => {
+  // Cek apakah ada token di localStorage
+  const isAuthenticated = !!localStorage.getItem('access_token')
+
+  const guestRoutes = ['/', '/login', '/register']
+
+  const requiresAuth = to.path.startsWith('/user') || to.path.startsWith('/admin')
+
+  if (requiresAuth && !isAuthenticated) {
+    next('/login?pesan=login_dulu');
+  } else if (guestRoutes.includes(to.path) && isAuthenticated) {
+    next('/user/db_user?pesan=udah_login'); 
+  } else {
+    next();
   }
 })
 
