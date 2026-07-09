@@ -59,7 +59,6 @@
                 </button>
             </form>
 
-            <!-- Resend (Opsional/Visual doang buat skrg) -->
             <div class="text-center mt-6">
                 <p class="text-gray-400 text-sm">
                     Tidak menerima email?
@@ -97,7 +96,7 @@ const inputRefs = ref([])
 const isLoading = ref(false)
 const errorMessage = ref('')
 
-// Computed: Gabungin array digit jadi 1 string
+// Gabungin array digit jadi 1 string
 const otpString = computed(() => otpDigits.value.join(''))
 
 // Fungsi pindah fokus input (kiri/kanan) otomatis
@@ -128,10 +127,8 @@ const verifyOtp = () => {
         isLoading.value = true
         errorMessage.value = ''
 
-        // Tembak event ke atas sambil bawa data OTP (nanti ditangkep sama Axios di halaman Register)
         emit('verify', otpString.value)
 
-        // Matikan loading simulasi (hapus nanti kalau udah nyambung axios)
         setTimeout(() => { isLoading.value = false }, 1000)
     }
 }
