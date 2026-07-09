@@ -1,16 +1,15 @@
-<script setup>
-// Kosongin aja, nggak butuh logic toggle sidebar lagi di sini
-</script>
-
 <template>
     <div class="w-full">
         <!-- Baris 1: Hero & Donut Chart -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6" data-aos="fade-down">
 
             <!-- Widget Hero (Kiri, 2 Kolom) -->
-            <div class="lg:col-span-2 bg-[#0d0524] rounded-3xl p-6 md:p-8 flex flex-col justify-between border border-[#1a123a] shadow-lg relative overflow-hidden">
+            <div
+                class="lg:col-span-2 bg-[#0d0524] rounded-3xl p-6 md:p-8 flex flex-col justify-between border border-[#1a123a] shadow-lg relative overflow-hidden">
                 <!-- Ornamen abstrak -->
-                <div class="absolute -top-10 -right-10 w-64 h-64 bg-gradient-to-br from-neon-cyan/10 to-transparent rounded-full blur-2xl pointer-events-none"></div>
+                <div
+                    class="absolute -top-10 -right-10 w-64 h-64 bg-gradient-to-br from-neon-cyan/10 to-transparent rounded-full blur-2xl pointer-events-none">
+                </div>
 
                 <div>
                     <p class="text-gray-400 text-xs md:text-sm font-medium mb-1">Dashboard Overview</p>
@@ -18,26 +17,30 @@
                         Hello Satria <span class="text-2xl md:text-3xl">👋</span>
                     </h1>
                 </div>
-                
-                <!-- BAGIAN INI YANG DIBENERIN BIAR RESPONSIVE -->
+
                 <div class="flex flex-row gap-3 md:gap-6 mt-8 md:mt-12 w-full">
-                
-                <!-- Kotak Status AQI -->
-                <div class="bg-[#1a103c] rounded-2xl p-4 md:p-5 w-1/2 border border-[#261a52] flex flex-col justify-center">
-                    <p class="text-gray-400 text-[10px] md:text-xs uppercase tracking-wider mb-1 line-clamp-1">Status AQI</p>
-                    <p class="text-xl md:text-2xl font-bold text-white flex flex-col md:flex-row md:items-baseline gap-1 md:gap-2">
-                    45 <span class="text-xs md:text-sm font-normal text-green-400">Baik</span>
-                    </p>
-                </div>
-                
-                <!-- Kotak Suhu Cuaca -->
-                <div class="bg-[#1a103c] rounded-2xl p-4 md:p-5 w-1/2 border border-[#261a52] flex flex-col justify-center">
-                    <div class="flex justify-between items-start mb-1">
-                        <p class="text-gray-400 text-[10px] md:text-xs uppercase tracking-wider line-clamp-1">Suhu Cuaca</p>
-                        <i class="pi pi-eye text-gray-500 text-xs md:text-sm mt-0.5"></i>
+
+                    <!-- Kotak Status AQI -->
+                    <div
+                        class="bg-[#1a103c] rounded-2xl p-4 md:p-5 w-1/2 border border-[#261a52] flex flex-col justify-center">
+                        <p class="text-gray-400 text-[10px] md:text-xs uppercase tracking-wider mb-1 line-clamp-1">
+                            Status AQI</p>
+                        <p
+                            class="text-xl md:text-2xl font-bold text-white flex flex-col md:flex-row md:items-baseline gap-1 md:gap-2">
+                            45 <span class="text-xs md:text-sm font-normal text-green-400">Baik</span>
+                        </p>
                     </div>
-                    <p class="text-xl md:text-2xl font-bold text-white">28°C</p>
-                </div>
+
+                    <!-- Kotak Suhu Cuaca -->
+                    <div
+                        class="bg-[#1a103c] rounded-2xl p-4 md:p-5 w-1/2 border border-[#261a52] flex flex-col justify-center">
+                        <div class="flex justify-between items-start mb-1">
+                            <p class="text-gray-400 text-[10px] md:text-xs uppercase tracking-wider line-clamp-1">Suhu
+                                Cuaca</p>
+                            <i class="pi pi-eye text-gray-500 text-xs md:text-sm mt-0.5"></i>
+                        </div>
+                        <p class="text-xl md:text-2xl font-bold text-white">28°C</p>
+                    </div>
 
                 </div>
             </div>
@@ -61,7 +64,7 @@
         </div>
 
         <!-- Baris 2: Table Data & List -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" data-aos="fade-up">
 
             <!-- Widget Table (Kiri, 2 Kolom) -->
             <div class="lg:col-span-2 bg-[#0d0524] rounded-3xl p-8 border border-[#1a123a] shadow-lg">
@@ -132,7 +135,8 @@
                         <div class="flex items-center gap-4">
                             <div
                                 class="w-10 h-10 rounded-xl bg-[#1a103c] flex items-center justify-center text-neon-cyan">
-                                <i class="pi pi-cloud"></i></div>
+                                <i class="pi pi-cloud"></i>
+                            </div>
                             <div>
                                 <p class="text-sm font-medium text-gray-200">Polusi Meningkat</p>
                                 <p class="text-xs text-gray-500">Jakarta Selatan</p>
@@ -145,7 +149,8 @@
                         <div class="flex items-center gap-4">
                             <div
                                 class="w-10 h-10 rounded-xl bg-[#1a103c] flex items-center justify-center text-neon-purple">
-                                <i class="pi pi-sun"></i></div>
+                                <i class="pi pi-sun"></i>
+                            </div>
                             <div>
                                 <p class="text-sm font-medium text-gray-200">Cuaca Panas Ekstrem</p>
                                 <p class="text-xs text-gray-500">Depok</p>
@@ -159,3 +164,26 @@
 
     </div>
 </template>
+
+<script setup>
+import { onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
+
+const route = useRoute()
+const router = useRouter()
+const toast = useToast()
+
+onMounted(() => {
+    if (route.query.pesan === 'udah_login') {
+        toast.add({
+            severity: 'info',
+            summary: 'Peringatan!',
+            detail: 'Harap log out terlebih dahulu!',
+            life: 4000
+        })
+
+        router.replace('/user/db_user')
+    }
+})
+</script>
