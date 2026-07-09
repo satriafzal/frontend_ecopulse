@@ -1,20 +1,3 @@
-<script setup>
-import { ref } from 'vue'
-import { RouterView, RouterLink } from 'vue-router'
-
-const isExpanded = ref(window.innerWidth > 768)
-
-const toggleSidebar = () => { 
-    isExpanded.value = !isExpanded.value 
-}
-
-const closeOnMobile = () => {
-    if (window.innerWidth < 768) {
-        isExpanded.value = false
-    }
-}
-</script>
-
 <template>
     <div class="min-h-screen bg-[#06011a] text-white flex font-sans overflow-hidden relative">
 
@@ -70,11 +53,11 @@ const closeOnMobile = () => {
                         <i class="pi pi-user"></i>
                         <span v-if="isExpanded">Profil</span>
                     </RouterLink>
-                    <RouterLink to="/" @click="closeOnMobile"
-                        class="flex items-center gap-4 px-4 py-3.5 rounded-full hover:bg-[#120b33] mt-4 text-red-400 hover:text-red-300">
+                    <a href="#" @click.prevent="confirmlogout"
+                        class="flex items-center gap-4 px-4 py-3.5 rounded-full hover:bg-[#120b33] mt-4 text-red-400 hover:text-red-300 cursor-pointer transition-colors">
                         <i class="pi pi-sign-out"></i>
                         <span v-if="isExpanded">Log Out</span>
-                    </RouterLink>
+                    </a>
                 </nav>
             </div>
         </aside>
@@ -95,3 +78,61 @@ const closeOnMobile = () => {
 
     </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+import { RouterView, RouterLink, useRouter } from 'vue-router';
+import { useConfirm } from 'primevue/useconfirm';
+import { useToast } from 'primevue/usetoast'
+
+const router = useRouter()
+const toast = useToast()
+const confirm = useConfirm()
+
+const isExpanded = ref(false);
+
+const toggleSidebar = () => { 
+    isExpanded.value = !isExpanded.value 
+}
+
+const closeOnMobile = () => {
+    if (window.innerWidth < 768) {
+        isExpanded.value = false
+    }
+}
+
+// for confirmation log out
+const confirmlogout = () => {
+    confirm.require({
+        message: 'Yakin mau log out dari akun ini?',
+        header: 'Konfirmasi Log Out',
+        icon: 'pi pi-info-circle text-3xl text-white shrink-0',
+        rejectProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true,
+            class: 'px-5 py-2.5 rounded-xl bg-transparent border border-gray-700 text-gray-300 text-sm font-medium hover:bg-gray-800/50 transition-colors'
+        },
+        acceptProps: {
+            label: 'Log Out',
+            severity: 'danger',
+            class: 'px-5 py-2.5 rounded-xl bg-[#ff6b6b] hover:bg-[#ff5252] text-[#06011a] text-sm font-bold shadow-[0_0_15px_rgba(255,107,107,0.3)] transition-all'
+        },
+        accept: () => {
+            localStorage.clear()
+            
+            closeOnMobile()
+
+            router.push('/') 
+            
+            toast.add({ 
+                severity: 'success', 
+                summary: 'Berhasil Logout', 
+                life: 4000 
+            })
+        },
+        reject: () => {
+        }
+    })
+}
+</script>
