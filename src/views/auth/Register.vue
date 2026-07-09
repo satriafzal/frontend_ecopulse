@@ -43,7 +43,7 @@ const submitRegister = async () => {
 
     // Kalau sukses dapet respon 201 Created
     if (response.status === 201) {
-      showOtpModal.value = true // Nyalain pop-up modal OTP
+      showOtpModal.value = true // open modal otp
     }
   } catch (error) {
     if (error.response && error.response.data) {
