@@ -14,7 +14,7 @@
                 <div>
                     <p class="text-gray-400 text-xs md:text-sm font-medium mb-1">Dashboard Overview</p>
                     <h1 class="text-3xl md:text-4xl font-bold text-white flex items-center gap-2 md:gap-3">
-                        Hello Satria <span class="text-2xl md:text-3xl">👋</span>
+                        Hello {{ username }} <span class="text-2xl md:text-3xl">👋</span>
                     </h1>
                 </div>
 
@@ -169,11 +169,43 @@
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
+import { ref } from 'vue';
+import axios from 'axios';
 
 const route = useRoute()
 const router = useRouter()
 const toast = useToast()
 
+
+// for username
+const username = ref('user');
+
+// fetch data user
+const fetchuserdata = async () => {
+    try {
+        const token = localStorage.getItem('access_token');
+
+        // check token true or false
+        if (token) {
+            const response = await axios.get('http://127.0.0.1:8000/api/user', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            // if laravel return data user, get username user from db
+            if (response.data && response.data.name) {
+                // get first name
+                const firstname = response.data.name;
+                username.value = firstname.split(' ')[0];
+            }
+        }
+    } catch (error) {
+        console.log('gagal ambil data user', error)
+    }
+}
+
+// wajib log out jika ingin pindah halaman
 onMounted(() => {
     if (route.query.pesan === 'udah_login') {
         toast.add({
@@ -186,4 +218,10 @@ onMounted(() => {
         router.replace('/user/db_user')
     }
 })
+
+onMounted(() => {
+    fetchuserdata()
+})
 </script>
+
+
