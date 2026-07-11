@@ -19,9 +19,9 @@ import Live_preview_status from './Live_preview_status.vue';
         </p>
         
         <div class="flex flex-wrap gap-5 mt-2 pb-8" data-aos="fade-up">
-          <button class="px-8 py-3 rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple text-dark-purple font-bold hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,255,255,0.4)]">
+          <router-link to="/login" class="px-8 py-3 rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple text-dark-purple font-bold hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,255,255,0.4)]">
             Jelajahi Lebih Lanjut
-          </button>
+          </router-link>
           <router-link to="/register" class="px-8 py-3 rounded-full border-2 border-neon-purple text-neon-purple font-bold hover:bg-neon-purple hover:text-white transition-colors duration-300 shadow-[0_0_15px_rgba(191,0,255,0.3)] flex items-center justify-center">
             Daftar
           </router-link>
