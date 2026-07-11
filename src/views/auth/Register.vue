@@ -13,6 +13,7 @@ const toast = useToast()
 const form = ref({
   name: '',
   email: '',
+  phone_number: '',
   password: '',
   password_confirmation: ''
 })
@@ -38,6 +39,7 @@ const submitRegister = async () => {
     const response = await axios.post('http://127.0.0.1:8000/api/register', {
       name: form.value.name,
       email: form.value.email,
+      phone_number: form.value.phone_number,
       password: form.value.password,
     })
 
@@ -120,6 +122,12 @@ const submitOtp = async (otpCode) => {
         <div class="relative">
           <i class="pi pi-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
           <input v-model="form.email" type="email" placeholder="Alamat Email" required
+            class="w-full bg-[#120b33] border border-dark-border text-white text-sm rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-colors">
+        </div>
+
+        <div class="relative">
+          <i class="pi pi-phone absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+          <input v-model="form.phone_number" type="text" placeholder="No Telpon" required
             class="w-full bg-[#120b33] border border-dark-border text-white text-sm rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-colors">
         </div>
 
