@@ -9,7 +9,6 @@ import Toast from 'primevue/toast'
 const router = useRouter()
 const toast = useToast()
 
-// 1. State buat nyimpen inputan user
 const form = ref({
   name: '',
   email: '',
@@ -18,12 +17,10 @@ const form = ref({
   password_confirmation: ''
 })
 
-// 2. State untuk UI (Loading, Error, dan Saklar Modal)
 const isLoading = ref(false)
 const errorMessage = ref('')
 const showOtpModal = ref(false)
 
-// 3. Fungsi pas tombol DAFTAR diklik
 const submitRegister = async () => {
   // Cek dulu apakah password dan konfirmasinya sama
   if (form.value.password !== form.value.password_confirmation) {
@@ -58,7 +55,7 @@ const submitRegister = async () => {
   }
 }
 
-// 4. Fungsi pas OTP dimasukkan di Modal
+//  Fungsi pas OTP dimasukkan di Modal
 const submitOtp = async (otpCode) => {
   try {
     const response = await axios.post('http://127.0.0.1:8000/api/verify-otp', {
@@ -67,7 +64,7 @@ const submitOtp = async (otpCode) => {
     })
 
     if (response.status === 200) {
-      // Simpan token biar user tetap login
+      // Save token
       localStorage.setItem('access_token', response.data.access_token)
 
       showOtpModal.value = false // Tutup modalnya
