@@ -119,15 +119,23 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // Cek apakah ada token di localStorage
   const isAuthenticated = !!localStorage.getItem('access_token')
+  const userRole = localStorage.getItem('user_role');
 
   const guestRoutes = ['/', '/login', '/register']
 
-  const requiresAuth = to.path.startsWith('/user') || to.path.startsWith('/admin')
-
-  if (requiresAuth && !isAuthenticated) {
+  const gouser = to.path.startsWith('/user');
+  const goadmin = to.path.startsWith('/admin');
+  
+  if (!isAuthenticated && (gouser || goadmin)) {
     next('/login?pesan=login_dulu');
-  } else if (guestRoutes.includes(to.path) && isAuthenticated) {
-    next('/user/db_user?pesan=udah_login'); 
+  } else if (isAuthenticated && guestRoutes.includes(to.path)) {
+    if (userRole === 'admin') {
+      next('/admin/adm-dashboard');
+    } else {
+      next('/user/db_user?pesan=udah_login');
+    }
+  } else if (goadmin && userRole !== 'admin') {
+    next('/user/db_user?pesan=akses_ditolak');
   } else {
     next();
   }
