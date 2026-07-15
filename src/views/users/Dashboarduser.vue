@@ -215,7 +215,16 @@ onMounted(() => {
             life: 4000
         })
 
-        router.replace('/user/db_user')
+        router.replace('/user/db_user');
+    } else if (route.query.pesan === 'akses_ditolak') {
+        toast.add({
+            severity: 'error',
+            summary: 'Peringatan!',
+            detail: 'Di larang akses!',
+            life: 4000
+        })
+
+        router.replace('/user/db_user');
     }
 })
 
