@@ -76,7 +76,7 @@ const submitOtp = async (otpCode) => {
       });
 
       setTimeout(() => {
-        router.push('/login') 
+        router.push('/user/db_user') 
       }, 2000)
     }
   } catch (error) {
