@@ -1,67 +1,3 @@
-<script setup>
-import { ref } from 'vue'
-
-const users = ref([
-    { id: 1, name: 'Budi Santoso', email: 'budi@example.com', phone_number: '081234567890' },
-    { id: 2, name: 'Siti Aminah', email: 'siti@example.com', phone_number: '089876543210' }
-])
-
-// State untuk mengatur Modal
-const showModal = ref(false)
-const isEditing = ref(false)
-
-// State untuk menampung inputan form
-const form = ref({
-    id: null,
-    name: '',
-    email: '',
-    phone_number: '',
-    password: ''
-})
-
-// Fungsi buka modal untuk Tambah User Baru
-const openAddModal = () => {
-    isEditing.value = false
-    form.value = { id: null, name: '', email: '', phone_number: '', password: '' }
-    showModal.value = true
-}
-
-// Fungsi buka modal untuk Edit User
-const openEditModal = (user) => {
-    isEditing.value = true
-    form.value = { ...user, password: '' }
-    showModal.value = true
-}
-
-// Fungsi tutup modal
-const closeModal = () => {
-    showModal.value = false
-}
-
-// Fungsi Simpan (Create / Update)
-const saveUser = () => {
-    if (isEditing.value) {
-        // Logika UPDATE
-        const index = users.value.findIndex(u => u.id === form.value.id)
-        if (index !== -1) {
-            users.value[index] = { ...form.value }
-        }
-    } else {
-        // Logika CREATE
-        const newId = users.value.length ? Math.max(...users.value.map(u => u.id)) + 1 : 1
-        users.value.push({ ...form.value, id: newId })
-    }
-    closeModal()
-}
-
-// Fungsi Hapus
-const deleteUser = (id) => {
-    if (confirm('Yakin ingin menghapus pengguna ini? Tindakan ini tidak bisa dibatalkan.')) {
-        users.value = users.value.filter(u => u.id !== id)
-    }
-}
-</script>
-
 <template>
     <div class="w-full max-w-7xl mx-auto">
 
@@ -101,7 +37,7 @@ const deleteUser = (id) => {
                                     title="Edit">
                                     <i class="pi pi-pencil"></i>
                                 </button>
-                                <button @click="deleteUser(user.id)"
+                                <button @click="deleteUser(user)"
                                     class="w-8 h-8 rounded-full bg-red-500/10 text-red-400 hover:bg-red-500/20 flex items-center justify-center transition-colors"
                                     title="Hapus">
                                     <i class="pi pi-trash"></i>
@@ -119,7 +55,6 @@ const deleteUser = (id) => {
         <!-- Modal Form CRUD -->
         <div v-if="showModal" class="fixed inset-0 z-[60] flex items-center justify-center px-4">
 
-            <!-- Latar Hitam Transparan (Klik di luar untuk tutup) -->
             <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" @click="closeModal"></div>
 
             <!-- Kotak Modal -->
@@ -178,3 +113,136 @@ const deleteUser = (id) => {
 
     </div>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useToast } from 'primevue/usetoast';
+import { useConfirm } from 'primevue/useconfirm';
+
+const toast = useToast();
+const users = ref([]);
+const confirm = useConfirm();
+const token = localStorage.getItem('access_token');
+
+// State untuk mengatur Modal
+const showModal = ref(false)
+const isEditing = ref(false)
+
+// State untuk menampung inputan form
+const form = ref({
+    id: null,
+    name: '',
+    email: '',
+    phone_number: '',
+    password: ''
+})
+
+// get data user
+const fetchUsers = async () => {
+    try {
+        const response = await axios.get('http://127.0.0.1:8000/api/admin/users', {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        // replace data users use new data
+        users.value = response.data.data
+    } catch (error) {
+        console.log(error, "gagal ambil data user!");
+        toast.add({ severity: 'error', summary: 'Error', detail: 'Gagal menghapus pengguna', life: 3000 })
+    }
+}
+
+// fetching data when open page
+onMounted(() => {
+    fetchUsers();
+})
+
+const deleteUser = (user) => {
+    confirm.require({
+        message: `Yakin ingin menghapus ${user.name}? Tindakan ini tidak bisa dibatalkan!`,
+        header: 'Konfirmasi Hapus Pengguna',
+        icon: 'pi pi-exclamation-triangle',
+        rejectLabel: 'Batal',
+        acceptLabel: 'Hapus',
+        rejectClass: 'p-button-secondary p-button-outlined text-gray-400 border-[#1a123a] hover:bg-white/5',
+        acceptClass: 'p-button-danger bg-red-500 hover:bg-red-600 border-none',
+        accept: async () => {
+            try {
+                await axios.delete(`http://127.0.0.1:8000/api/admin/users/${user.id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
+                
+                users.value = users.value.filter(u => u.id !== user.id)
+                toast.add({ severity: 'success', summary: 'Berhasil', detail: `Pengguna ${user.name} berhasil di hapus`, life: 3000 })
+                
+            } catch (error) {
+                console.error('Error delete data:', error)
+                toast.add({ severity: 'error', summary: 'Error', detail: 'Gagal menghapus pengguna', life: 3000 })
+            }
+        },
+        reject: () => {
+        }
+    })
+}
+
+// create new user
+const saveUser = async () => {
+    try {
+        if (isEditing.value) {
+            alert('fitur belom rilis');
+        } else {
+            const response = await axios.post('http://127.0.0.1:8000/api/admin/users', {
+                name: form.value.name,
+                email: form.value.email,
+                phone_number: form.value.phone_number,
+                password: form.value.password
+            }, {
+                headers: {Authorization : `Bearer ${token}`}
+            });
+            
+            const newUser = response.data.data || response.data.user || response.data;
+
+            if (newUser && newUser.id) {
+                users.value.unshift(newUser);
+            } else {
+                console.error("Format data dari Laravel gak sesuai, gagal nambah baris otomatis!");
+            }
+
+            toast.add({ severity: 'success', summary: 'Berhasil', detail: 'Akun baru berhasil dibuat!', life: 3000 });
+            
+
+            closeModal();
+        }
+    } catch (error) {
+        console.log("gagal save user", error);
+        if (error.response && error.response.status === 422) {
+            const errorMessages = error.response.data.errors;
+            for (const field in errorMessages) {
+                toast.add({ severity: 'warn', summary: 'Input Tidak Valid!', detail: errorMessages[field][0], life: 4000 });
+            }
+        } else {
+            toast.add({ severity: 'error', summary: 'Gagal', detail: 'Terjadi kesalahan sistem, coba lagi nanti!', life: 3000 });
+        }
+    }
+}
+
+// Fungsi buka modal untuk Tambah User Baru
+const openAddModal = () => {
+    isEditing.value = false
+    form.value = { id: null, name: '', email: '', phone_number: '', password: '' }
+    showModal.value = true
+}
+
+// Fungsi buka modal untuk Edit User
+const openEditModal = (user) => {
+    isEditing.value = true
+    form.value = { ...user, password: '' }
+    showModal.value = true
+}
+
+// Fungsi tutup modal
+const closeModal = () => {
+    showModal.value = false
+    form.value = { id: null, name: '', email: '', phone_number: '', password: '' };
+}
+</script>
