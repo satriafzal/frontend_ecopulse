@@ -16,7 +16,7 @@
         <div class="text-3xl font-extrabold tracking-wider mb-2">
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">ECO</span>PULSE
         </div>
-        <p class="text-gray-400 text-sm">Selamat datang kembali! Silakan masuk ke akun Anda.</p>
+        <p class="text-gray-400 text-sm">Selamat datang kembali! Silakan masuk ke akun Anda</p>
       </div>
 
       <form @submit.prevent="submitLogin" class="flex flex-col gap-6">
@@ -148,8 +148,15 @@ const submitLogin = async () => {
         toast.add({
           severity: 'error',
           summary: 'Login Gagal',
-          detail: 'Email atau kata sandi salah!',
+          detail: 'username atau password salah!',
           life: 4000
+        })
+      } else if (error.response.status === 404) {
+        toast.add({
+          severity: 'error',
+          summary: 'Akun tidak di temukan!',
+          detail: 'Silahkan daftar ulang untuk melakukan login!',
+          life: 5000
         })
       }
       else if (error.response.status === 429) {
