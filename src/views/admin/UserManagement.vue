@@ -32,7 +32,7 @@
                             <td class="py-4 px-4 text-gray-400">{{ user.email }}</td>
                             <td class="py-4 px-4 text-gray-400">{{ user.phone_number || '-' }}</td>
                             <td class="py-4 px-4 flex justify-center gap-3">
-                                <button @click="openEditModal(user)"
+                                <button @click="editUser(user)"
                                     class="w-8 h-8 rounded-full bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 flex items-center justify-center transition-colors"
                                     title="Edit">
                                     <i class="pi pi-pencil"></i>
@@ -185,11 +185,47 @@ const deleteUser = (user) => {
     })
 }
 
+// edit or update data user modal
+const editUser = (userData) => {
+    isEditing.value = true; // change modal to edit
+
+    form.value = {
+        id: userData.id,
+        name: userData.name,
+        email: userData.email,
+        phone_number: userData.phone_number,
+        password: ''
+    }
+
+    showModal.value = true; // open modal
+
+}
+
 // create new user
 const saveUser = async () => {
     try {
         if (isEditing.value) {
-            alert('fitur belom rilis');
+            const response = await axios.put(`http://127.0.0.1:8000/api/admin/users/${form.value.id}`, {
+                name: form.value.name,
+                email: form.value.email,
+                phone_number: form.value.phone_number,
+                password: form.value.password
+            }, {
+                headers: {Authorization: `Bearer ${token}`}
+            });
+
+            const updatedUser = response.data.data || response.data.user || response.data;
+
+            const index = users.value.findIndex(u => u.id === form.value.id);
+
+            if (index !== -1 && updatedUser.id) {
+                users.value.splice(index, 1, updatedUser);
+            } else {
+                console.error("id tidak di temukan!");
+            }
+
+            toast.add({ severity: 'success', summary: 'Berhasil', detail: `Data ${updatedUser.name} berhasil diupdate!`, life: 3000 });
+            closeModal();
         } else {
             const response = await axios.post('http://127.0.0.1:8000/api/admin/users', {
                 name: form.value.name,
@@ -230,13 +266,6 @@ const saveUser = async () => {
 const openAddModal = () => {
     isEditing.value = false
     form.value = { id: null, name: '', email: '', phone_number: '', password: '' }
-    showModal.value = true
-}
-
-// Fungsi buka modal untuk Edit User
-const openEditModal = (user) => {
-    isEditing.value = true
-    form.value = { ...user, password: '' }
     showModal.value = true
 }
 
