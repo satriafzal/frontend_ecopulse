@@ -1,33 +1,3 @@
-<script setup>
-import { ref } from 'vue'
-
-// Dummy Data: Status Layanan API Eksternal
-const services = ref([
-  { id: 1, name: 'IQAir Global API', status: 'Healthy', ping: '45ms', uptime: '99.9%', lastCheck: 'Baru saja' },
-  { id: 2, name: 'BMKG Open Data', status: 'Warning', ping: '312ms', uptime: '98.5%', lastCheck: '2 menit lalu' },
-  { id: 3, name: 'OpenWeather API', status: 'Down', ping: 'Timeout', uptime: '89.2%', lastCheck: '5 menit lalu' }
-])
-
-// Dummy Data: Log Request API Terbaru
-const apiLogs = ref([
-  { id: 101, time: '13:30:45', method: 'GET', endpoint: 'api.airvisual.com/v2/nearest_city', status: 200, ms: 42 },
-  { id: 102, time: '13:28:12', method: 'GET', endpoint: 'api.airvisual.com/v2/city', status: 429, ms: 12 },
-  { id: 103, time: '13:25:00', method: 'GET', endpoint: 'data.bmkg.go.id/.../cuaca.xml', status: 500, ms: 1205 },
-  { id: 104, time: '13:20:15', method: 'GET', endpoint: 'api.airvisual.com/v2/nearest_city', status: 200, ms: 48 },
-  { id: 105, time: '13:15:05', method: 'GET', endpoint: 'api.openweathermap.org/data/2.5/air_pollution', status: 200, ms: 65 },
-])
-
-// Fungsi untuk me-refresh ping (simulasi)
-const isRefreshing = ref(false)
-const pingAll = () => {
-  isRefreshing.value = true
-  setTimeout(() => {
-    isRefreshing.value = false
-    alert('Ping selesai! (Ini simulasi nge-ping ulang ke server API)')
-  }, 1500)
-}
-</script>
-
 <template>
   <div class="w-full max-w-7xl mx-auto">
     
@@ -140,3 +110,34 @@ const pingAll = () => {
 
   </div>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+import axios from 'axios'
+
+// Dummy Data: Status Layanan API Eksternal
+const services = ref([
+  { id: 1, name: 'IQAir Global API', status: 'Healthy', ping: '45ms', uptime: '99.9%', lastCheck: 'Baru saja' },
+  { id: 2, name: 'BMKG Open Data', status: 'Warning', ping: '312ms', uptime: '98.5%', lastCheck: '2 menit lalu' },
+  { id: 3, name: 'OpenWeather API', status: 'Down', ping: 'Timeout', uptime: '89.2%', lastCheck: '5 menit lalu' }
+])
+
+// Dummy Data: Log Request API Terbaru
+const apiLogs = ref([
+  { id: 101, time: '13:30:45', method: 'GET', endpoint: 'api.airvisual.com/v2/nearest_city', status: 200, ms: 42 },
+  { id: 102, time: '13:28:12', method: 'GET', endpoint: 'api.airvisual.com/v2/city', status: 429, ms: 12 },
+  { id: 103, time: '13:25:00', method: 'GET', endpoint: 'data.bmkg.go.id/.../cuaca.xml', status: 500, ms: 1205 },
+  { id: 104, time: '13:20:15', method: 'GET', endpoint: 'api.airvisual.com/v2/nearest_city', status: 200, ms: 48 },
+  { id: 105, time: '13:15:05', method: 'GET', endpoint: 'api.openweathermap.org/data/2.5/air_pollution', status: 200, ms: 65 },
+])
+
+// Fungsi untuk me-refresh ping (simulasi)
+const isRefreshing = ref(false)
+const pingAll = () => {
+  isRefreshing.value = true
+  setTimeout(() => {
+    isRefreshing.value = false
+    alert('Ping selesai! (Ini simulasi nge-ping ulang ke server API)')
+  }, 1500)
+}
+</script>
