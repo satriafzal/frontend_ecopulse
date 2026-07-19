@@ -100,7 +100,7 @@
                 </span>
               </td>
               <td class="py-3 px-4 text-right" :class="log.ms > 1000 ? 'text-red-400' : 'text-gray-400'">
-                {{ log.ms }} ms
+                {{ log.latency }} ms
               </td>
             </tr>
           </tbody>
@@ -112,8 +112,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
+
+const isRefreshing = ref(false);
 
 // Dummy Data: Status Layanan API Eksternal
 const services = ref([
@@ -125,19 +127,127 @@ const services = ref([
 // Dummy Data: Log Request API Terbaru
 const apiLogs = ref([
   { id: 101, time: '13:30:45', method: 'GET', endpoint: 'api.airvisual.com/v2/nearest_city', status: 200, ms: 42 },
-  { id: 102, time: '13:28:12', method: 'GET', endpoint: 'api.airvisual.com/v2/city', status: 429, ms: 12 },
-  { id: 103, time: '13:25:00', method: 'GET', endpoint: 'data.bmkg.go.id/.../cuaca.xml', status: 500, ms: 1205 },
-  { id: 104, time: '13:20:15', method: 'GET', endpoint: 'api.airvisual.com/v2/nearest_city', status: 200, ms: 48 },
-  { id: 105, time: '13:15:05', method: 'GET', endpoint: 'api.openweathermap.org/data/2.5/air_pollution', status: 200, ms: 65 },
+  { id: 102, time: '13:28:12', method: 'GET', endpoint: 'api.airvisual.com/v2/city', status: 429, ms: 12 }
 ])
 
-// Fungsi untuk me-refresh ping (simulasi)
-const isRefreshing = ref(false)
-const pingAll = () => {
-  isRefreshing.value = true
-  setTimeout(() => {
-    isRefreshing.value = false
-    alert('Ping selesai! (Ini simulasi nge-ping ulang ke server API)')
-  }, 1500)
+// function for fetch api bmkg untuk ping status api
+const pingBMKG = async () => {
+  // search potition widget bmkg in array
+  const bmkgIndex = services.value.findIndex(s => s.id === 2);
+
+  const endpoint = 'http://localhost:8000/api/ping-bmkg';
+
+  // on stopwatch
+  const startTime = performance.now();
+
+  try {
+    const response = await axios.get(endpoint);
+
+    // off stopwatch & hitung selisih waktu
+    const endTime = performance.now();
+    const latency = Math.round(endTime - startTime);
+
+    // updatw widget
+    services.value[bmkgIndex].status = 'Healthy';
+    services.value[bmkgIndex].ping = `${latency}ms`;
+    services.value[bmkgIndex].lastCheck = 'Baru saja';
+
+    // tambah log ke tabel bawah
+    apiLogs.value.unshift({
+      id: Date.now(), 
+      time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      method: 'GET',
+      endpoint: 'localhost:8000/api/ping-bmkg',
+      status: response.status,
+      latency: latency
+    });
+  } catch (error) {
+    // jika server down atau error
+    console.log('gagal ambil data', error);
+    const endTime = performance.now()
+    const latency = Math.round(endTime - startTime)
+    const statusCode = error.response ? error.response.status : 500
+
+    // update kotak widget error
+    services.value[bmkgIndex].status = 'Down'
+    services.value[bmkgIndex].ping = 'Error'
+    services.value[bmkgIndex].lastCheck = 'Baru saja'
+
+    // tambah log error ke tabel bawah
+    apiLogs.value.unshift({
+      id: Date.now(),
+      time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      method: 'GET',
+      endpoint: 'localhost:8000/api/ping-bmkg',
+      status: statusCode,
+      latency: latency
+    });
+  }
 }
+
+// for monitoring api open weather
+const pingOpenWeather = async () => {
+  const owIndex = 2;
+
+  const startTime = performance.now();
+
+  try {
+    // get data api from backend
+    const endpoint = 'http://localhost:8000/api/ping-openweather'
+
+    const response = await axios.get(endpoint);
+
+    const endTime = performance.now();
+    const latency = Math.round(endTime-startTime);
+
+    // updat ui kotak open weather api
+    services.value[owIndex].status = 'Healthy';
+    services.value[owIndex].ping = `${latency}ms`;
+    services.value[owIndex].lastCheck = 'Baru saja';
+
+    // update tabel bawah
+    apiLogs.value.unshift({
+      time:new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit', second: '2-digit'}),
+      method: 'GET',
+      endpoint: 'localhost:8000/api/ping-openweather',
+      status: response.status,
+      latency: latency,
+    })
+  } catch (error) {
+    console.log("gagal mengambil data openweather", error);
+    const statusCode = error.response ? error.response.status : 500;
+
+    services.value[owIndex].status = 'Down';
+    services.value[owIndex].ping = 'Error';
+    services.value[owIndex].lastCheck = 'Baru saja';
+
+    apiLogs.value.unshift({
+      time: new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit', second: '2-digit'}),
+      method: 'GET',
+      endpoint: 'localhost:8000/api/ping-openweather',
+      status: statusCode,
+      latency: '-'
+    })
+  }
+}
+
+// Fungsi untuk me-refresh ping
+const pingAll = async () => {
+  isRefreshing.value = true
+  const bmkgIndex = 1
+  const owIndex =2
+  services.value[bmkgIndex].ping = 'Memuat...'
+  services.value[owIndex].ping = 'Memuat...'
+
+  // running ping
+  await pingBMKG();
+  await pingOpenWeather();
+  
+  isRefreshing.value = false;
+}
+
+onMounted(() => {
+  pingOpenWeather();
+  pingBMKG();
+})
 </script>
