@@ -5,7 +5,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
       <div>
         <h1 class="text-3xl font-bold text-white mb-2">Monitoring API</h1>
-        <p class="text-gray-400 text-sm">Pantau status koneksi (Uptime) dan log request ke server cuaca pihak ketiga.</p>
+        <p class="text-gray-400 text-sm">Pantau status koneksi (Uptime) dan log request ke server cuaca pihak ketiga</p>
       </div>
       <button @click="pingAll" :disabled="isRefreshing" class="px-6 py-2.5 bg-[#1a103c] border border-[#261a52] hover:bg-[#261a52] rounded-full font-bold text-white transition-all flex items-center gap-2 text-sm disabled:opacity-50">
         <i class="pi pi-refresh" :class="{'animate-spin': isRefreshing}"></i> 
@@ -125,10 +125,7 @@ const services = ref([
 ])
 
 // Dummy Data: Log Request API Terbaru
-const apiLogs = ref([
-  { id: 101, time: '13:30:45', method: 'GET', endpoint: 'api.airvisual.com/v2/nearest_city', status: 200, ms: 42 },
-  { id: 102, time: '13:28:12', method: 'GET', endpoint: 'api.airvisual.com/v2/city', status: 429, ms: 12 }
-])
+const apiLogs = ref([])
 
 // function for fetch api bmkg untuk ping status api
 const pingBMKG = async () => {
@@ -200,7 +197,7 @@ const pingOpenWeather = async () => {
     const endTime = performance.now();
     const latency = Math.round(endTime-startTime);
 
-    // updat ui kotak open weather api
+    // update ui kotak open weather api
     services.value[owIndex].status = 'Healthy';
     services.value[owIndex].ping = `${latency}ms`;
     services.value[owIndex].lastCheck = 'Baru saja';
@@ -231,15 +228,63 @@ const pingOpenWeather = async () => {
   }
 }
 
+const pingIqAir = async () => {
+  const iqIndex = 0;
+
+  services.value[iqIndex].status = 'Memuat...';
+
+  const startTime = performance.now();
+
+  try {
+      const endpoint = 'http://localhost:8000/api/ping-iqair';
+      const response = await axios.get(endpoint);
+
+      const endTime = performance.now();
+      const latency = Math.round(endTime - startTime);
+
+      // update ui
+      services.value[iqIndex].status = 'Healthy';
+      services.value[iqIndex].ping = `${latency}ms`;
+      services.value[iqIndex].lastCheck = `Baru saja`;
+
+      apiLogs.value.unshift({
+        time: new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit', second: '2-digit'}),
+        method: 'GET',
+        endpoint: endpoint,
+        status: response.status,
+        latency: latency
+      })
+  } catch (error) {
+    console.log('gagal mengambil data', error);
+    const status_code = error.response ? error.response.status : 500;
+
+    // update ui
+    services.value[iqIndex].status = 'Down';
+    services.value[iqIndex].ping = `Error`;
+    services.value[iqIndex].lastCheck = `Baru saja`;
+
+    apiLogs.value.unshift({
+      time: new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit', second: '2-digit'}),
+      method: 'GET',
+      endpoint: endpoint,
+      status: status_code,
+      latency: '-'
+    })
+  }
+}
+
 // Fungsi untuk me-refresh ping
 const pingAll = async () => {
   isRefreshing.value = true
-  const bmkgIndex = 1
-  const owIndex =2
+  const IQAirIndex = 0;
+  const bmkgIndex = 1;
+  const owIndex =2;
   services.value[bmkgIndex].ping = 'Memuat...'
   services.value[owIndex].ping = 'Memuat...'
+  services.value[IQAirIndex].ping = 'Memuat...'
 
   // running ping
+  await pingIqAir();
   await pingBMKG();
   await pingOpenWeather();
   
@@ -247,6 +292,7 @@ const pingAll = async () => {
 }
 
 onMounted(() => {
+  pingIqAir();
   pingOpenWeather();
   pingBMKG();
 })
