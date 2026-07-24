@@ -1,48 +1,46 @@
 <template>
   <div class="w-full max-w-7xl mx-auto">
-    
+
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
       <div>
         <h1 class="text-3xl font-bold text-white mb-2">Monitoring API</h1>
         <p class="text-gray-400 text-sm">Pantau status koneksi (Uptime) dan log request ke server cuaca pihak ketiga</p>
       </div>
-      <button @click="pingAll" :disabled="isRefreshing" class="px-6 py-2.5 bg-[#1a103c] border border-[#261a52] hover:bg-[#261a52] rounded-full font-bold text-white transition-all flex items-center gap-2 text-sm disabled:opacity-50">
-        <i class="pi pi-refresh" :class="{'animate-spin': isRefreshing}"></i> 
+      <button @click="pingAll" :disabled="isRefreshing"
+        class="px-6 py-2.5 bg-[#1a103c] border border-[#261a52] hover:bg-[#261a52] rounded-full font-bold text-white transition-all flex items-center gap-2 text-sm disabled:opacity-50">
+        <i class="pi pi-refresh" :class="{ 'animate-spin': isRefreshing }"></i>
         {{ isRefreshing ? 'Mengecek...' : 'Ping Ulang Semua' }}
       </button>
     </div>
 
     <!-- WIDGET STATUS SERVER -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div v-for="service in services" :key="service.id" 
-           class="bg-[#0d0524] rounded-3xl p-6 border shadow-lg relative overflow-hidden"
-           :class="{
-             'border-green-900/50': service.status === 'Healthy',
-             'border-yellow-900/50': service.status === 'Warning',
-             'border-red-900/50': service.status === 'Down'
-           }">
-        
+      <div v-for="service in services" :key="service.id"
+        class="bg-[#0d0524] rounded-3xl p-6 border shadow-lg relative overflow-hidden" :class="{
+          'border-green-900/50': service.status === 'Healthy',
+          'border-yellow-900/50': service.status === 'Warning',
+          'border-red-900/50': service.status === 'Down'
+        }">
+
         <!-- Efek Glow di pojok -->
-        <div class="absolute -right-4 -top-4 w-20 h-20 rounded-full blur-2xl opacity-20"
-             :class="{
-               'bg-green-500': service.status === 'Healthy',
-               'bg-yellow-500': service.status === 'Warning',
-               'bg-red-500': service.status === 'Down'
-             }"></div>
+        <div class="absolute -right-4 -top-4 w-20 h-20 rounded-full blur-2xl opacity-20" :class="{
+          'bg-green-500': service.status === 'Healthy',
+          'bg-yellow-500': service.status === 'Warning',
+          'bg-red-500': service.status === 'Down'
+        }"></div>
 
         <div class="flex justify-between items-start mb-4 relative z-10">
           <h3 class="font-bold text-white text-lg">{{ service.name }}</h3>
-          <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider"
-                :class="{
-                  'bg-green-500/10 text-green-400': service.status === 'Healthy',
-                  'bg-yellow-500/10 text-yellow-400': service.status === 'Warning',
-                  'bg-red-500/10 text-red-400': service.status === 'Down'
-                }">
+          <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" :class="{
+            'bg-green-500/10 text-green-400': service.status === 'Healthy',
+            'bg-yellow-500/10 text-yellow-400': service.status === 'Warning',
+            'bg-red-500/10 text-red-400': service.status === 'Down'
+          }">
             {{ service.status }}
           </span>
         </div>
-        
+
         <div class="grid grid-cols-2 gap-4 relative z-10">
           <div>
             <p class="text-[10px] text-gray-500 font-semibold uppercase mb-1">Latency (Ping)</p>
@@ -54,7 +52,8 @@
           </div>
         </div>
         <div class="mt-4 pt-4 border-t border-[#1a123a] relative z-10">
-          <p class="text-xs text-gray-400"><i class="pi pi-clock mr-1"></i> Pengecekan terakhir: {{ service.lastCheck }}</p>
+          <p class="text-xs text-gray-400"><i class="pi pi-clock mr-1"></i> Pengecekan terakhir: {{ service.lastCheck }}
+          </p>
         </div>
       </div>
     </div>
@@ -67,7 +66,7 @@
           <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> Live Monitoring
         </div>
       </div>
-      
+
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse min-w-[700px]">
           <thead>
@@ -79,8 +78,9 @@
               <th class="pb-4 font-medium px-4 text-right">Waktu Respon</th>
             </tr>
           </thead>
-          <tbody class="text-sm font-mono"> <!-- Pake font-mono biar kelihatan kayak log server beneran -->
-            <tr v-for="log in apiLogs" :key="log.id" class="border-b border-[#1a123a]/50 hover:bg-[#120b33] transition-colors">
+          <tbody class="text-sm font-mono">
+            <tr v-for="log in apiLogs" :key="log.id"
+              class="border-b border-[#1a123a]/50 hover:bg-[#120b33] transition-colors">
               <td class="py-3 px-4 text-gray-500">{{ log.time }}</td>
               <td class="py-3 px-4">
                 <span class="text-blue-400 font-bold">{{ log.method }}</span>
@@ -90,12 +90,11 @@
               </td>
               <td class="py-3 px-4 text-center">
                 <!-- Logika warna berdasarkan HTTP Status Code -->
-                <span class="px-2 py-1 rounded text-xs font-bold"
-                      :class="{
-                        'bg-green-500/20 text-green-400': log.status >= 200 && log.status < 300,
-                        'bg-yellow-500/20 text-yellow-400': log.status === 429,
-                        'bg-red-500/20 text-red-400': log.status >= 500
-                      }">
+                <span class="px-2 py-1 rounded text-xs font-bold" :class="{
+                  'bg-green-500/20 text-green-400': log.status >= 200 && log.status < 300,
+                  'bg-yellow-500/20 text-yellow-400': log.status === 429,
+                  'bg-red-500/20 text-red-400': log.status >= 500
+                }">
                   {{ log.status }}
                 </span>
               </td>
@@ -116,6 +115,7 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
 const isRefreshing = ref(false);
+const token = localStorage.getItem('access_token');
 
 // Dummy Data: Status Layanan API Eksternal
 const services = ref([
@@ -138,7 +138,11 @@ const pingBMKG = async () => {
   const startTime = performance.now();
 
   try {
-    const response = await axios.get(endpoint);
+    const response = await axios.get(endpoint, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
 
     // off stopwatch & hitung selisih waktu
     const endTime = performance.now();
@@ -151,7 +155,7 @@ const pingBMKG = async () => {
 
     // tambah log ke tabel bawah
     apiLogs.value.unshift({
-      id: Date.now(), 
+      id: Date.now(),
       time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
       method: 'GET',
       endpoint: 'localhost:8000/api/ping-bmkg',
@@ -192,10 +196,14 @@ const pingOpenWeather = async () => {
     // get data api from backend
     const endpoint = 'http://localhost:8000/api/ping-openweather'
 
-    const response = await axios.get(endpoint);
+    const response = await axios.get(endpoint, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
 
     const endTime = performance.now();
-    const latency = Math.round(endTime-startTime);
+    const latency = Math.round(endTime - startTime);
 
     // update ui kotak open weather api
     services.value[owIndex].status = 'Healthy';
@@ -204,7 +212,7 @@ const pingOpenWeather = async () => {
 
     // update tabel bawah
     apiLogs.value.unshift({
-      time:new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit', second: '2-digit'}),
+      time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
       method: 'GET',
       endpoint: 'localhost:8000/api/ping-openweather',
       status: response.status,
@@ -219,7 +227,7 @@ const pingOpenWeather = async () => {
     services.value[owIndex].lastCheck = 'Baru saja';
 
     apiLogs.value.unshift({
-      time: new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit', second: '2-digit'}),
+      time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
       method: 'GET',
       endpoint: 'localhost:8000/api/ping-openweather',
       status: statusCode,
@@ -236,24 +244,28 @@ const pingIqAir = async () => {
   const startTime = performance.now();
 
   try {
-      const endpoint = 'http://localhost:8000/api/ping-iqair';
-      const response = await axios.get(endpoint);
+    const endpoint = 'http://localhost:8000/api/ping-iqair';
+    const response = await axios.get(endpoint, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
 
-      const endTime = performance.now();
-      const latency = Math.round(endTime - startTime);
+    const endTime = performance.now();
+    const latency = Math.round(endTime - startTime);
 
-      // update ui
-      services.value[iqIndex].status = 'Healthy';
-      services.value[iqIndex].ping = `${latency}ms`;
-      services.value[iqIndex].lastCheck = `Baru saja`;
+    // update ui
+    services.value[iqIndex].status = 'Healthy';
+    services.value[iqIndex].ping = `${latency}ms`;
+    services.value[iqIndex].lastCheck = `Baru saja`;
 
-      apiLogs.value.unshift({
-        time: new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit', second: '2-digit'}),
-        method: 'GET',
-        endpoint: endpoint,
-        status: response.status,
-        latency: latency
-      })
+    apiLogs.value.unshift({
+      time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      method: 'GET',
+      endpoint: endpoint,
+      status: response.status,
+      latency: latency
+    })
   } catch (error) {
     console.log('gagal mengambil data', error);
     const status_code = error.response ? error.response.status : 500;
@@ -264,7 +276,7 @@ const pingIqAir = async () => {
     services.value[iqIndex].lastCheck = `Baru saja`;
 
     apiLogs.value.unshift({
-      time: new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit', second: '2-digit'}),
+      time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
       method: 'GET',
       endpoint: endpoint,
       status: status_code,
@@ -278,7 +290,7 @@ const pingAll = async () => {
   isRefreshing.value = true
   const IQAirIndex = 0;
   const bmkgIndex = 1;
-  const owIndex =2;
+  const owIndex = 2;
   services.value[bmkgIndex].ping = 'Memuat...'
   services.value[owIndex].ping = 'Memuat...'
   services.value[IQAirIndex].ping = 'Memuat...'
@@ -287,7 +299,7 @@ const pingAll = async () => {
   await pingIqAir();
   await pingBMKG();
   await pingOpenWeather();
-  
+
   isRefreshing.value = false;
 }
 
