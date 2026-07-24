@@ -13,9 +13,7 @@
   <div class="bg-[#0d0524] rounded-3xl p-6 border border-[#1a123a] shadow-lg flex items-center justify-between">
     <div>
       <p class="text-gray-400 text-xs uppercase tracking-wider mb-2">Total Pengguna</p>
-      <!-- Variabel Total User -->
       <p class="text-3xl font-bold text-white">{{ overviewStats.users.total }}</p>
-      <!-- Variabel Growth User -->
       <p class="text-xs text-green-400 mt-2"><i class="pi pi-arrow-up text-[10px]"></i> {{ overviewStats.users.growth }}</p>
     </div>
     <div class="w-14 h-14 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
@@ -28,9 +26,7 @@
     <div class="absolute -right-4 -top-4 w-20 h-20 bg-green-500/10 rounded-full blur-xl"></div>
     <div class="z-10">
       <p class="text-gray-400 text-xs uppercase tracking-wider mb-2">Status API Cuaca</p>
-      <!-- Variabel Status API -->
       <p class="text-3xl font-bold text-white">{{ overviewStats.api.status }}</p>
-      <!-- Variabel Ping dan Rate -->
       <p class="text-xs text-gray-400 mt-2">Ping: {{ overviewStats.api.ping }} | Rate: {{ overviewStats.api.rate }}</p>
     </div>
     <div class="w-14 h-14 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center z-10">
@@ -42,9 +38,7 @@
   <div class="bg-[#0d0524] rounded-3xl p-6 border border-[#1a123a] shadow-lg flex items-center justify-between">
     <div>
       <p class="text-gray-400 text-xs uppercase tracking-wider mb-2">Lokasi Dipantau</p>
-      <!-- Variabel Total Lokasi -->
       <p class="text-3xl font-bold text-white">{{ overviewStats.locations.total }}</p>
-      <!-- Variabel Detail Kota -->
       <p class="text-xs text-gray-400 mt-2">{{ overviewStats.locations.cities }}</p>
     </div>
     <div class="w-14 h-14 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
@@ -103,13 +97,15 @@
       <h3 class="text-white font-semibold text-lg">Pertumbuhan Pengguna</h3>
       
       <div class="flex gap-3">
-        <select v-model="selectedMonth" class="bg-[#1a1333] border border-gray-700 text-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-green-500">
-          <option value="Juni">Juni</option>
-          <option value="Juli">Juli</option>
-          <option value="Agustus">Agustus</option>
+        <!-- Tambahin @change dan ubah value jadi angka -->
+        <select v-model="selectedMonth" @change="updateChart" class="bg-[#1a1333] border border-gray-700 text-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-green-500">
+          <option value="6">Juni</option>
+          <option value="7">Juli</option>
+          <option value="8">Agustus</option>
         </select>
         
-        <select v-model="selectedYear" class="bg-[#1a1333] border border-gray-700 text-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-green-500">
+        <!-- Tambahin @change -->
+        <select v-model="selectedYear" @change="updateChart" class="bg-[#1a1333] border border-gray-700 text-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-green-500">
           <option value="2025">2025</option>
           <option value="2026">2026</option>
         </select>
@@ -129,53 +125,74 @@ import { ref, onMounted } from 'vue'
 import Chart from 'primevue/chart'
 import axios from 'axios'
 
-// Variabel buat Filter
-const selectedMonth = ref('Juli')
+const token = localStorage.getItem('access_token');
+
+// Variabel buat Filter (Default: Bulan Juli (7) Tahun 2026)
+const selectedMonth = ref('7')
 const selectedYear = ref('2026')
 
-// Variabel penampung Grafik
-const chartData = ref()
-const chartOptions = ref()
+// Struktur awal Grafik (Datanya dikosongin dulu)
+const chartData = ref({
+  labels: [],
+  datasets: [
+    {
+      label: 'Pendaftaran User Baru',
+      data: [],
+      fill: true,
+      borderColor: '#10b981', 
+      tension: 0.4, 
+      backgroundColor: 'rgba(16, 185, 129, 0.1)' 
+    }
+  ]
+})
 
-// Fungsi buat ngisi/update data grafik
-const setChartData = () => {
-  return {
-    labels: ['1', '5', '10', '15', '20', '25', '30'],
-    datasets: [
-      {
-        label: 'Pendaftaran User Baru',
-        data: [12, 25, 18, 45, 30, 60, 85],
-        fill: true,
-        borderColor: '#10b981', 
-        tension: 0.4, 
-        backgroundColor: 'rgba(16, 185, 129, 0.1)' 
+// Logika nembak API buat Grafik
+const updateChart = async () => {
+  try {
+    const response = await axios.get('http://localhost:8000/api/chart-users', {
+      params: {
+        month: selectedMonth.value,
+        year: selectedYear.value
+      }, headers: {
+        'Authorization': `Bearer ${token}`
       }
-    ]
+    });
+
+    chartData.value = {
+      ...chartData.value,
+      labels: response.data.labels,
+      datasets: [
+        {
+          ...chartData.value.datasets[0],
+          data: response.data.data
+        }
+      ]
+    };
+  } catch (error) {
+    console.error("Gagal mengambil data grafik:", error);
   }
 }
 
-// Fungsi buat ngatur desain grafik
-const setChartOptions = () => {
-  return {
-    maintainAspectRatio: false,
-    aspectRatio: 0.6,
-    plugins: {
-      legend: {
-        labels: { color: '#9ca3af' } 
-      }
+// Desain grafik
+const chartOptions = ref({
+  maintainAspectRatio: false,
+  aspectRatio: 0.6,
+  plugins: {
+    legend: {
+      labels: { color: '#9ca3af' } 
+    }
+  },
+  scales: {
+    x: {
+      ticks: { color: '#9ca3af' }, 
+      grid: { color: 'rgba(255, 255, 255, 0.05)' }
     },
-    scales: {
-      x: {
-        ticks: { color: '#9ca3af' }, 
-        grid: { color: 'rgba(255, 255, 255, 0.05)' }
-      },
-      y: {
-        ticks: { color: '#9ca3af' },
-        grid: { color: 'rgba(255, 255, 255, 0.05)' }
-      }
+    y: {
+      ticks: { color: '#9ca3af' },
+      grid: { color: 'rgba(255, 255, 255, 0.05)' }
     }
   }
-}
+})
 
 const overviewStats = ref({
   users: { total: '...', growth: '...' },
@@ -183,14 +200,15 @@ const overviewStats = ref({
   locations: { total: '...', cities: '...' }
 });
 
-// 2. Fungsi buat nembak Laravel
+// Fungsi Kotak Statistik
 const fetchSummaryStats = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/dashboard-summary');
-    
-    // Kalau sukses, masukin data dari Laravel ke kotak UI
+    const response = await axios.get('http://localhost:8000/api/dashboard-summary', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
     overviewStats.value = response.data;
-    
   } catch (error) {
     console.error("Gagal mengambil data summary:", error);
     overviewStats.value.users.total = '-';
@@ -201,7 +219,6 @@ const fetchSummaryStats = async () => {
 
 onMounted(() => {
   fetchSummaryStats();
-  chartData.value = setChartData()
-  chartOptions.value = setChartOptions()
+  updateChart(); 
 })
 </script>
